@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { NAV_LINKS, SITE_CONFIG } from '@/lib/constants';
 import clsx from 'clsx';
@@ -35,13 +36,14 @@ export function Header() {
     >
       <nav className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
-        <motion.a
-          href="#hero"
-          className="text-xl font-bold gradient-text"
-          whileHover={{ scale: 1.05 }}
-        >
-          {SITE_CONFIG.name}
-        </motion.a>
+        <Link to="/">
+          <motion.span
+            className="text-xl font-bold gradient-text"
+            whileHover={{ scale: 1.05 }}
+          >
+            {SITE_CONFIG.name}
+          </motion.span>
+        </Link>
 
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
