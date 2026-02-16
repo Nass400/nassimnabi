@@ -1,4 +1,4 @@
-name: Deploy Portfolio to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -10,23 +10,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      # 3️⃣ Install dependencies
       - name: Install dependencies
         run: npm install
 
+      # 4️⃣ Build project
       - name: Build project
         run: npm run build
 
-      - name: Deploy to github-pages branch
+      # 5️⃣ Configure Git (prevents exit 128)
+      - name: Set Git user
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      # 6️⃣ Deploy to github-pages branch
+      - name: Deploy to github-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: github-pages
+          force_orphan: true
