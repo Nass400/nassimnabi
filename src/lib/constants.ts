@@ -65,19 +65,41 @@ export const EXPERIENCES: Experience[] = [
 export const CURATED_PROJECTS: CuratedProject[] = [
   {
     title: 'Nass keys',
+    slug: 'nass-keys',
     description:
       'A lightweight Linux hotkey manager that allows you to map key combinations to commands, text, or key sequences—including sequential or simultaneous key presses—without manual setup. Perfect for automating repetitive tasks.',
     techStack: ['shell', 'python'],
     githubUrl: 'https://github.com/Nass400/nass-keys',
     featured: true,
+    docs: {
+      about:
+        'Nass Keys is a lightweight Linux hotkey manager built with Shell and Python. It lets you map any key combination to commands, text snippets, or key sequences without editing config files manually. Whether you need to launch apps, type boilerplate text, or trigger complex key sequences, Nass Keys handles it all from a simple CLI interface.',
+      features:
+        'Map key combos to shell commands, text, or key sequences. Supports sequential and simultaneous key presses. Simple CLI interface for adding, listing, and removing hotkeys. Runs as a background daemon. Lightweight with minimal dependencies. Works on any Linux desktop environment.',
+      installation:
+        'Clone the repository:\n\ngit clone https://github.com/Nass400/nass-keys.git\ncd nass-keys\n\nRun the install script:\n\nchmod +x install.sh\n./install.sh\n\nThis will install the required Python dependencies and set up the daemon.',
+      usage:
+        'Add a new hotkey:\n\nnass-keys add\n\nYou will be prompted to press your desired key combination, then choose whether to map it to a command, text, or key sequence.\n\nList all hotkeys:\n\nnass-keys list\n\nRemove a hotkey:\n\nnass-keys remove\n\nStart the daemon:\n\nnass-keys start',
+    },
   },
   {
     title: 'Guard app',
+    slug: 'guard-app',
     description:
-      'Medical Student Shift Scheduler, where future doctors can organize and schedule their working shits and staff.',
+      'Medical Student Shift Scheduler, where future doctors can organize and schedule their working shifts and staff.',
     techStack: ['React.js', 'Node.js', 'Render.js'],
     githubUrl: 'https://github.com/Nass400/guard-app',
     featured: true,
+    docs: {
+      about:
+        'Guard App is a shift scheduling platform designed for medical students and hospital staff. It simplifies the process of organizing on-call shifts, managing team availability, and coordinating schedules across departments. Built with React.js on the frontend and Node.js on the backend.',
+      features:
+        'Interactive shift calendar with drag-and-drop scheduling. Role-based access for admins and staff members. Automatic conflict detection for overlapping shifts. Team overview dashboard. Notification system for shift changes. Responsive design for mobile and desktop.',
+      installation:
+        'Clone the repository:\n\ngit clone https://github.com/Nass400/guard-app.git\ncd guard-app\n\nInstall dependencies:\n\nnpm install\n\nSet up environment variables by copying the example env file:\n\ncp .env.example .env\n\nStart the development server:\n\nnpm run dev',
+      usage:
+        'Once the app is running, log in with your credentials or create a new account. From the dashboard you can:\n\n- View the shift calendar for your department\n- Create and assign shifts by clicking on a date\n- Swap shifts with other team members\n- Export your schedule',
+    },
   },
 ];
 

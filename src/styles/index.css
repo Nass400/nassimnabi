@@ -12,12 +12,13 @@
   }
 
   /* Custom cursor - hidden on mobile */
+  /*
   @media (pointer: fine) {
     * {
       cursor: none !important;
     }
   }
-
+  */
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 8px;

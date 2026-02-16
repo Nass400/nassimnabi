@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/sections/Hero';
@@ -6,12 +8,19 @@ import { Experience } from '@/components/sections/Experience';
 import { Projects } from '@/components/sections/Projects';
 import { Skills } from '@/components/sections/Skills';
 import { Contact } from '@/components/sections/Contact';
-import { CustomCursor } from '@/components/ui/CustomCursor';
+import { ProjectDocsPage } from '@/components/pages/ProjectDocsPage';
 
-export default function App() {
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+function HomePage() {
   return (
     <>
-      <CustomCursor />
       <Header />
       <main>
         <Hero />
@@ -22,6 +31,18 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/project/:slug" element={<ProjectDocsPage />} />
+      </Routes>
     </>
   );
 }
