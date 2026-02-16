@@ -1,9 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy Portfolio to GitHub Pages
 
 on:
   push:
     branches:
-      - main
+      - main  # Trigger deployment on pushes to main
 
 jobs:
   build-and-deploy:
@@ -34,11 +34,11 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-      # 6️⃣ Deploy to github-pages branch
+      # 6️⃣ Deploy to github-pages branch using your PAT
       - name: Deploy to github-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GH_PAT }}   # Use the PAT you stored in repo secrets
           publish_dir: ./dist
           publish_branch: github-pages
-          force_orphan: true
+          force_orphan: true   # ensures clean deploy, avoids conflicts
