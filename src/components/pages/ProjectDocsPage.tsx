@@ -1,15 +1,33 @@
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Github, ExternalLink, Menu, X, BookOpen, Wrench, Download, Sparkles } from 'lucide-react';
+import {
+  ArrowLeft,
+  Github,
+  ExternalLink,
+  Menu,
+  X,
+  BookOpen,
+  Download,
+  Sparkles,
+  Sliders,
+  PlayCircle,
+  Lightbulb,
+  Puzzle, ShieldCheck
+} from 'lucide-react';
 import { CURATED_PROJECTS } from '@/lib/constants';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import type { DocBlock, DocSection } from '@/types/project';
 
 const NAV_SECTIONS = [
   { id: 'about', label: 'About', icon: BookOpen },
   { id: 'features', label: 'Features', icon: Sparkles },
   { id: 'installation', label: 'Installation', icon: Download },
-  { id: 'usage', label: 'Usage', icon: Wrench },
+  { id: 'usage', label: 'Usage', icon: PlayCircle },
+  { id: 'configuration', label: 'Configuration', icon: Sliders },
+  { id: 'proTips', label: 'Pro Tips', icon: Lightbulb },
+  { id: 'dependencies', label: 'Dependencies', icon: Puzzle },
+  { id: 'license', label: 'License', icon: ShieldCheck },
 ] as const;
 
 export function ProjectDocsPage() {
@@ -44,52 +62,90 @@ export function ProjectDocsPage() {
     return true;
   });
 
-  const getSectionContent = (id: string): string => {
+  const getSectionContent = (id: string): DocSection | null => {
     switch (id) {
       case 'about':
         return docs.about;
       case 'features':
-        return docs.features || '';
+        return docs.features || null;
       case 'installation':
         return docs.installation;
       case 'usage':
         return docs.usage;
+      case 'configuration':
+        return docs.configuration|| null;
+      case 'proTips':
+        return docs.proTips|| null;
+      case 'dependencies':
+        return docs.dependencies|| null;
+      case 'license':
+        return docs.license|| null;
       default:
-        return '';
+        return null;
     }
   };
 
-  const renderContent = (content: string) => {
-    return content.split('\n\n').map((block, i) => {
-      const isCode = block.startsWith('git ') || block.startsWith('npm ') || block.startsWith('chmod ') || block.startsWith('cd ') || block.startsWith('cp ') || block.startsWith('nass-keys ') || block.startsWith('./');
-      if (isCode) {
+  const renderBlock = (block: DocBlock, i: number) => {
+    switch (block.type) {
+      case 'paragraph':
+        return (
+          <p key={i} className="text-text-light/70 dark:text-text-dark/70 leading-relaxed my-3">
+            {block.content}
+          </p>
+        );
+      case 'code':
         return (
           <pre
             key={i}
             className="bg-black/5 dark:bg-white/5 rounded-lg p-4 font-mono text-sm overflow-x-auto my-3"
           >
-            <code>{block}</code>
+            <code>{block.content}</code>
           </pre>
         );
-      }
-
-      if (block.startsWith('- ')) {
-        const items = block.split('\n').filter((l) => l.startsWith('- '));
+      case 'list':
         return (
           <ul key={i} className="list-disc list-inside space-y-1 my-3 text-text-light/70 dark:text-text-dark/70">
-            {items.map((item, j) => (
-              <li key={j}>{item.slice(2)}</li>
+            {block.items.map((item, j) => (
+              <li key={j}>{item}</li>
             ))}
           </ul>
         );
-      }
+      case 'image':
+        return (
+          <figure key={i} className="my-5">
+            <img
+              src={block.src}
+              alt={block.alt}
+              className="rounded-lg border border-black/5 dark:border-white/5 w-full"
+            />
+            {block.caption && (
+              <figcaption className="text-xs text-text-light/50 dark:text-text-dark/50 mt-2 text-center">
+                {block.caption}
+              </figcaption>
+            )}
+          </figure>
+        );
+      case 'video':
+        return (
+          <figure key={i} className="my-5">
+            <video
+              src={block.src}
+              controls
+              className="rounded-lg border border-black/5 dark:border-white/5 w-full"
+            />
+            {block.caption && (
+              <figcaption className="text-xs text-text-light/50 dark:text-text-dark/50 mt-2 text-center">
+                {block.caption}
+              </figcaption>
+            )}
+          </figure>
+        );
+    }
+  };
 
-      return (
-        <p key={i} className="text-text-light/70 dark:text-text-dark/70 leading-relaxed my-3">
-          {block}
-        </p>
-      );
-    });
+  const renderContent = (section: DocSection | null) => {
+    if (!section) return null;
+    return section.blocks.map((block, i) => renderBlock(block, i));
   };
 
   const handleNavClick = (id: string) => {

@@ -64,23 +64,178 @@ export const EXPERIENCES: Experience[] = [
 
 export const CURATED_PROJECTS: CuratedProject[] = [
   {
-    title: 'Nass keys',
+    title: 'Nass Keys',
     slug: 'nass-keys',
     description:
-      'A lightweight Linux hotkey manager that allows you to map key combinations to commands, text, or key sequences—including sequential or simultaneous key presses—without manual setup. Perfect for automating repetitive tasks.',
+        'A lightweight Linux hotkey manager that allows you to map key combinations to commands, text, or key sequences—including sequential or simultaneous key presses—without manual setup. Perfect for automating repetitive tasks.',
     techStack: ['shell', 'python'],
     githubUrl: 'https://github.com/Nass400/nass-keys',
     featured: true,
     docs: {
-      about:
-        'Nass Keys is a lightweight Linux hotkey manager built with Shell and Python. It lets you map any key combination to commands, text snippets, or key sequences without editing config files manually. Whether you need to launch apps, type boilerplate text, or trigger complex key sequences, Nass Keys handles it all from a simple CLI interface.',
-      features:
-        'Map key combos to shell commands, text, or key sequences. Supports sequential and simultaneous key presses. Simple CLI interface for adding, listing, and removing hotkeys. Runs as a background daemon. Lightweight with minimal dependencies. Works on any Linux desktop environment.',
-      installation:
-        'Clone the repository:\n\ngit clone https://github.com/Nass400/nass-keys.git\ncd nass-keys\n\nRun the install script:\n\nchmod +x install.sh\n./install.sh\n\nThis will install the required Python dependencies and set up the daemon.',
-      usage:
-        'Add a new hotkey:\n\nnass-keys add\n\nYou will be prompted to press your desired key combination, then choose whether to map it to a command, text, or key sequence.\n\nList all hotkeys:\n\nnass-keys list\n\nRemove a hotkey:\n\nnass-keys remove\n\nStart the daemon:\n\nnass-keys start',
-    },
+      about: {
+        blocks: [
+          {
+            type: 'paragraph',
+            content:
+                'Nass Keys is a lightweight Linux hotkey manager built with Shell and Python. It lets you map any key combination to commands, text snippets, or key sequences without editing config files manually.'
+          },
+          {
+            type: 'image',
+            src: '/docs/nass-keys/overview.png',
+            alt: 'Nass Keys CLI overview',
+            caption: 'Nass Keys CLI in action'
+          },
+          {
+            type: 'paragraph',
+            content:
+                'Whether you need to launch apps, type boilerplate text, or trigger complex key sequences, Nass Keys handles it all from a simple CLI interface.'
+          }
+        ]
+      },
+      features: {
+        blocks: [
+          {
+            type: 'list',
+            items: [
+              'Map key combos to shell commands, text, or key sequences',
+              'Supports sequential (seq) and simultaneous (sim) key presses',
+              'Simple CLI interface for adding, listing, and removing hotkeys',
+              'Runs as a background daemon',
+              'Lightweight with minimal dependencies',
+              'Works on any Linux desktop environment'
+            ]
+          }
+        ]
+      },
+      installation: {
+        blocks: [
+          {
+            type: 'paragraph',
+            content: 'Clone the repository:'
+          },
+          {
+            type: 'code',
+            language: 'bash',
+            content: 'git clone https://github.com/Nass400/nass-keys.git\ncd nass-keys'
+          },
+          {
+            type: 'paragraph',
+            content: 'Run the install script:'
+          },
+          {
+            type: 'code',
+            language: 'bash',
+            content: 'chmod +x install.sh\n./install.sh'
+          },
+          {
+            type: 'paragraph',
+            content:
+                'This will install the required Python dependencies, set up the CLI, and initialize the background daemon.'
+          }
+        ]
+      },
+      usage: {
+        blocks: [
+          { type: 'paragraph', content: 'Add a new hotkey:' },
+          { type: 'code', language: 'bash', content: 'nass-keys add' },
+          {
+            type: 'paragraph',
+            content:
+                'You will be prompted to press your desired key combination, then choose whether to map it to a command, text, or key sequence.'
+          },
+          {
+            type: 'image',
+            src: '/docs/nass-keys/add-hotkey.png',
+            alt: 'Adding a hotkey',
+            caption: 'Interactive hotkey binding prompt'
+          },
+          { type: 'paragraph', content: 'List all hotkeys:' },
+          { type: 'code', language: 'bash', content: 'nass-keys list' },
+          {
+            type: 'image',
+            src: '/docs/nass-keys/list-hotkeys.png',
+            alt: 'Hotkey list output',
+            caption: 'Example output of configured hotkeys'
+          },
+          { type: 'paragraph', content: 'Remove a hotkey:' },
+          { type: 'code', language: 'bash', content: 'nass-keys remove' },
+          { type: 'paragraph', content: 'Apply or start the daemon:' },
+          { type: 'code', language: 'bash', content: 'nass-keys start\nnass-keys apply' },
+          {
+            type: 'video',
+            src: '/docs/nass-keys/demo.mp4',
+            caption: 'Full workflow demo: add, list, and use a hotkey'
+          },
+          {
+            type: 'paragraph',
+            content:
+                'Hotkey Command Formats:'
+          },
+          {
+            type: 'list',
+            items: [
+              'Sequential: seq:key1,key2 — Press keys in order, e.g., seq:F11,F12',
+              'Simultaneous: sim:key1,key2 — Press keys together, e.g., sim:F11,F12',
+              'Text: text:string — Automatically types text, e.g., text:Hello world!',
+              'Command: cmd:utility — Executes terminal commands, e.g., cmd:gnome-terminal',
+              'Direct Bash command — Runs any shell command, e.g., xdg-open ~/Docs'
+            ]
+          }
+        ]
+      },
+      configuration: {
+        blocks: [
+          {
+            type: 'paragraph',
+            content:
+                'All hotkey definitions are stored in ~/.config/my_hotkeys.conf. Example configuration:'
+          },
+          {
+            type: 'code',
+            language: 'bash',
+            content: '# Sequential keys\nCtrl+Alt+R : seq:F11,F12\n\n# Type text\nCtrl+Alt+U : text:Hello world!\n\n# Run a command\nCtrl+Alt+N : cmd:gnome-terminal'
+          },
+          {
+            type: 'paragraph',
+            content:
+                'Comments starting with # are ignored, making it easy to organize your shortcuts.'
+          }
+        ]
+      },
+      proTips: {
+        blocks: [
+          {
+            type: 'list',
+            items: [
+              'Delays: Use "sleep" in sequential keys, e.g., seq:F11,sleep 0.1,F12',
+              'X11 Requirement: Ensure you run an X11 session (common on Ubuntu, Mint, Fedora)',
+              'Use simple, memorable key combinations for productivity'
+            ]
+          }
+        ]
+      },
+      dependencies: {
+        blocks: [
+          {
+            type: 'list',
+            items: [
+              'xbindkeys: Detect keyboard shortcuts',
+              'xdotool: Simulate mouse and keyboard input',
+              'xvkbd: Handle virtual keyboard text entry'
+            ]
+          }
+        ]
+      },
+      license: {
+        blocks: [
+          {
+            type: 'paragraph',
+            content:
+                'This project is open-source and free to use, modify, and distribute.'
+          }
+        ]
+      }
+    }
   },
   {
     title: 'Guard app',
@@ -91,14 +246,50 @@ export const CURATED_PROJECTS: CuratedProject[] = [
     githubUrl: 'https://github.com/Nass400/guard-app',
     featured: true,
     docs: {
-      about:
-        'Guard App is a shift scheduling platform designed for medical students and hospital staff. It simplifies the process of organizing on-call shifts, managing team availability, and coordinating schedules across departments. Built with React.js on the frontend and Node.js on the backend.',
-      features:
-        'Interactive shift calendar with drag-and-drop scheduling. Role-based access for admins and staff members. Automatic conflict detection for overlapping shifts. Team overview dashboard. Notification system for shift changes. Responsive design for mobile and desktop.',
-      installation:
-        'Clone the repository:\n\ngit clone https://github.com/Nass400/guard-app.git\ncd guard-app\n\nInstall dependencies:\n\nnpm install\n\nSet up environment variables by copying the example env file:\n\ncp .env.example .env\n\nStart the development server:\n\nnpm run dev',
-      usage:
-        'Once the app is running, log in with your credentials or create a new account. From the dashboard you can:\n\n- View the shift calendar for your department\n- Create and assign shifts by clicking on a date\n- Swap shifts with other team members\n- Export your schedule',
+      about: {
+        blocks: [
+          { type: 'paragraph', content: 'Guard App is a shift scheduling platform designed for medical students and hospital staff. It simplifies the process of organizing on-call shifts, managing team availability, and coordinating schedules across departments.' },
+          { type: 'image', src: '/docs/guard-app/dashboard.png', alt: 'Guard App dashboard', caption: 'Main scheduling dashboard' },
+          { type: 'paragraph', content: 'Built with React.js on the frontend and Node.js on the backend.' },
+        ],
+      },
+      features: {
+        blocks: [
+          { type: 'list', items: [
+            'Interactive shift calendar with drag-and-drop scheduling',
+            'Role-based access for admins and staff members',
+            'Automatic conflict detection for overlapping shifts',
+            'Team overview dashboard',
+            'Notification system for shift changes',
+            'Responsive design for mobile and desktop',
+          ] },
+          { type: 'video', src: '/docs/guard-app/features-walkthrough.mp4', caption: 'Features walkthrough' },
+        ],
+      },
+      installation: {
+        blocks: [
+          { type: 'paragraph', content: 'Clone the repository:' },
+          { type: 'code', language: 'bash', content: 'git clone https://github.com/Nass400/guard-app.git\ncd guard-app' },
+          { type: 'paragraph', content: 'Install dependencies:' },
+          { type: 'code', language: 'bash', content: 'npm install' },
+          { type: 'paragraph', content: 'Set up environment variables by copying the example env file:' },
+          { type: 'code', language: 'bash', content: 'cp .env.example .env' },
+          { type: 'paragraph', content: 'Start the development server:' },
+          { type: 'code', language: 'bash', content: 'npm run dev' },
+        ],
+      },
+      usage: {
+        blocks: [
+          { type: 'paragraph', content: 'Once the app is running, log in with your credentials or create a new account. From the dashboard you can:' },
+          { type: 'list', items: [
+            'View the shift calendar for your department',
+            'Create and assign shifts by clicking on a date',
+            'Swap shifts with other team members',
+            'Export your schedule',
+          ] },
+          { type: 'image', src: '/docs/guard-app/shift-calendar.png', alt: 'Shift calendar view', caption: 'Calendar with assigned shifts' },
+        ],
+      },
     },
   },
 ];

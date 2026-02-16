@@ -1,10 +1,25 @@
 import type { RepoStats } from './github';
 
+export type DocBlock =
+  | { type: 'paragraph'; content: string }
+  | { type: 'code'; content: string; language?: string }
+  | { type: 'list'; items: string[] }
+  | { type: 'image'; src: string; alt: string; caption?: string }
+  | { type: 'video'; src: string; caption?: string };
+
+export interface DocSection {
+  blocks: DocBlock[];
+}
+
 export interface ProjectDocs {
-  about: string;
-  installation: string;
-  usage: string;
-  features?: string;
+  about: DocSection;
+  installation: DocSection;
+  usage: DocSection;
+  configuration?: DocSection;
+  proTips?: DocSection;
+  dependencies?: DocSection;
+  license?: DocSection;
+  features?: DocSection;
   websiteUrl?: string;
 }
 
